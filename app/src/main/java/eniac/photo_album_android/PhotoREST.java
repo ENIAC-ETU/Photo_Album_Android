@@ -6,5 +6,5 @@ import retrofit2.http.Query;
 
 public interface PhotoREST{
     @GET("/photos")
-    Call<PhotoFields[]> getPhotos();
+    Call<PhotoFields[]> getPhotos(@Query("album") Integer album);
 }

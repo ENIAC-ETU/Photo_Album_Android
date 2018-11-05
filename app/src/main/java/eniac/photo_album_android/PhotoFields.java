@@ -1,9 +1,20 @@
 package eniac.photo_album_android;
 
-import android.widget.ImageView;
-
 public class PhotoFields {
-        String album;
-        ImageView photo;
-        String uploaded_at;
+    Integer album;
+    String photo;
+    String uploaded_at;
+
+    public Integer getAlbum() {
+        return album;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public String getUploaded_at() {
+        return uploaded_at;
+    }
+
 }
