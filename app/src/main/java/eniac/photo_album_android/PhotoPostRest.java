@@ -10,6 +10,6 @@ import retrofit2.http.Part;
 
 public interface PhotoPostRest {
     @Multipart
-    @POST("/photos")
+    @POST("/photos/")
     Call<ResponseBody> uploadPhoto(@Part MultipartBody.Part photo, @Part("album") RequestBody album);
 }

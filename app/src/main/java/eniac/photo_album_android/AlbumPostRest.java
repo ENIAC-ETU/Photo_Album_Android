@@ -6,7 +6,7 @@ import retrofit2.http.POST;
 
 
 public interface AlbumPostRest {
-    @POST("/albums")
+    @POST("/albums/")
     Call<AlbumFields> createAlbum(@Body AlbumFields album);
 
 }
