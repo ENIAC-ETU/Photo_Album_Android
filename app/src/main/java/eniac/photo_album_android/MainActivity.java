@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity{
     RecyclerView rvAlbums, rvPhotos;
     private int PICK_IMAGE_REQUEST = 1;
     Integer currentAlbum;
+    String username = "test", password = "adminadmin";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
     public void getAlbums() {
         rvAlbums = (RecyclerView) findViewById(R.id.rvAlbums);
         albumMain = new AlbumResponse();
-        albumMain.initiateAlbumApi(rvAlbums);
+        albumMain.initiateAlbumApi(rvAlbums, username, password);
         rvAlbums.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -49,10 +50,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void postAlbum(View view) {
         EditText mEditAlbumName = (EditText) findViewById(R.id.edit_album_name);
-        EditText mEditOwmer = (EditText) findViewById(R.id.edit_owner);
         setContentView(R.layout.activity_main);
         postAlbum = new AlbumPost();
-        postAlbum.createAlbum(this, mEditAlbumName.getText().toString(), mEditOwmer.getText().toString());
+        postAlbum.createAlbum(this, mEditAlbumName.getText().toString(), username, password);
     }
 
     public void getPhotos(View view) {
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity{
     public void backToPhotos() {
         rvPhotos = (RecyclerView) findViewById(R.id.rvPhotos);
         photoMain = new PhotoResponse();
-        photoMain.initiatePhotoApi(currentAlbum, rvPhotos);
+        photoMain.initiatePhotoApi(currentAlbum, rvPhotos, username, password);
         rvPhotos.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity{
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri uri = data.getData();
             postPhoto = new PhotoPost();
-            postPhoto.uploadPhoto(this, currentAlbum, uri);
+            postPhoto.uploadPhoto(this, currentAlbum, uri, username, password);
         }
     }
 }

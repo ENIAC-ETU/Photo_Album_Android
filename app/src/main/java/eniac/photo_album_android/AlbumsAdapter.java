@@ -19,7 +19,7 @@ public class AlbumsAdapter extends
     public class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public TextView nameTextView, ownerTextView, dateTextView;
+        public TextView nameTextView, dateTextView;
         public Button albumButton;
 
         // We also create a constructor that accepts the entire item row
@@ -30,7 +30,6 @@ public class AlbumsAdapter extends
             super(itemView);
 
             nameTextView = (TextView) itemView.findViewById(R.id.album_name);
-            ownerTextView = (TextView) itemView.findViewById(R.id.owner);
             dateTextView = (TextView) itemView.findViewById(R.id.created_at);
             albumButton = (Button) itemView.findViewById(R.id.album_button);
         }
@@ -68,8 +67,6 @@ public class AlbumsAdapter extends
         TextView textView = viewHolder.nameTextView;
         Button button = viewHolder.albumButton;
         textView.setText(album.getTitle());
-        textView = viewHolder.ownerTextView;
-        textView.setText(album.getOwner());
         textView = viewHolder.dateTextView;
         textView.setText(album.getCreated_at());
         button.setText("Albüme Git");

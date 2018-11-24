@@ -10,6 +10,7 @@ import java.io.OutputStream;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -20,12 +21,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class PhotoPost {
-    private static final String API_BASE_URL = "https://photo-album-eniac.herokuapp.com//";
+    private static final String API_BASE_URL = "https://photo-album-eniac.herokuapp.com/";
 
-    protected void uploadPhoto(final MainActivity ma, Integer albumId, Uri filePath) {
+    protected void uploadPhoto(final MainActivity ma, Integer albumId, Uri filePath, String username, String password) {
+        OkHttpClient okHttpClient = new OkHttpClient()
+                .newBuilder()
+                .addInterceptor(new BasicAuthInterceptor(username, password))
+                .build();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

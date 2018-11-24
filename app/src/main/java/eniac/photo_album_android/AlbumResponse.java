@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.support.v7.widget.RecyclerView;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,11 +17,16 @@ public class AlbumResponse  {
     private static final String API_BASE_URL = "https://photo-album-eniac.herokuapp.com/";
     private static List<AlbumFields> albums = new ArrayList<AlbumFields>();
 
+    protected void initiateAlbumApi(final RecyclerView rView, String username, String password) {
+        OkHttpClient okHttpClient = new OkHttpClient()
+                .newBuilder()
+                .addInterceptor(new BasicAuthInterceptor(username, password))
+                .build();
 
-    protected void initiateAlbumApi(final RecyclerView rView) {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

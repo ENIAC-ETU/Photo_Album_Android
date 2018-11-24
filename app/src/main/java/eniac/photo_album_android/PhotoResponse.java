@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,9 +17,15 @@ public class PhotoResponse {
     private static final String API_BASE_URL = "https://photo-album-eniac.herokuapp.com/";
     private static List<PhotoFields> photos = new ArrayList<PhotoFields>();
 
-    protected void initiatePhotoApi(Integer albumId, final RecyclerView rView) {
+    protected void initiatePhotoApi(Integer albumId, final RecyclerView rView, String username, String password) {
+        OkHttpClient okHttpClient = new OkHttpClient()
+                .newBuilder()
+                .addInterceptor(new BasicAuthInterceptor(username, password))
+                .build();
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(API_BASE_URL)
+                .client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

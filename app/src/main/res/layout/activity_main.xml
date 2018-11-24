@@ -25,13 +25,6 @@
             android:text="Albüm Adı" />
 
         <TextView
-            android:id="@+id/owner"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Albüm Sahibi" />
-
-        <TextView
             android:id="@+id/created_at"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
