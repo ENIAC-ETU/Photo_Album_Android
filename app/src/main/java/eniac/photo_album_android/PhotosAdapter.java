@@ -26,7 +26,7 @@ public class PhotosAdapter extends
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
         public ImageView photoImageView;
-        public Button uploadButton;
+        public Button uploadButton, shareButton;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -37,6 +37,7 @@ public class PhotosAdapter extends
 
             photoImageView = (ImageView) itemView.findViewById(R.id.album_photo);
             uploadButton = (Button) itemView.findViewById(R.id.upload_photo);
+            shareButton = (Button) itemView.findViewById(R.id.share_photo);
         }
     }
 
@@ -70,9 +71,18 @@ public class PhotosAdapter extends
 
         ImageView imageView = viewHolder.photoImageView;
         imageView.setVisibility(View.VISIBLE);
-        String path = photo.getPhoto().replace("/photos", "");
+        String path = photo.getPhoto();
+        path = path.replace("/photos", "");
         path = path.replace("/app", "");
         path = path.replace("/albums", "");
+        String splitPath[] = path.split("/static/images/");
+        String baseUrl = splitPath[0];
+        String fileName = splitPath[1].split("\\.")[0];
+        String fileType = splitPath[1].split("\\.")[1];
+        String sharedUrl = baseUrl + "/shared?file_name=" + fileName + "&type=" + fileType;
+        Button shareButton = viewHolder.shareButton;
+        shareButton.setContentDescription(sharedUrl);
+
         new DownloadImageTask(imageView).execute(path);
     }
 

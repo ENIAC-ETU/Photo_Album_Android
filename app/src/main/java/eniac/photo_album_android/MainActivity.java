@@ -1,9 +1,15 @@
 package eniac.photo_album_android;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +19,10 @@ import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+import java.io.InputStream;
 
 
 public class MainActivity extends AppCompatActivity{
@@ -29,7 +39,22 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getAlbums();
+        Intent intent = getIntent();
+        String action = intent.getAction();
+        Uri data = intent.getData();
+        if (data != null) {
+            setContentView(R.layout.shared_photo);
+            ImageView imageView = findViewById(R.id.album_photo);
+            imageView.setVisibility(View.VISIBLE);
+            String parseUrl = data.toString().split("file_name=")[1];
+            String fileName = parseUrl.split("&type=")[0];
+            String fileType = parseUrl.split("&type=")[1];
+            String downloadUrl = data.toString().split("/shared")[0] + "/static/images/" + fileName + "." + fileType;
+            new DownloadImageTask(imageView).execute(downloadUrl);
+        }
+        else {
+            getAlbums();
+        }
     }
 
     public void getAlbums() {
@@ -93,6 +118,48 @@ public class MainActivity extends AppCompatActivity{
             Uri uri = data.getData();
             postPhoto = new PhotoPost();
             postPhoto.uploadPhoto(this, currentAlbum, uri, username, password);
+        }
+    }
+
+    public void sharePhoto(View view) {
+        Button shareButton = (Button) view;
+        String path = shareButton.getContentDescription().toString();
+        System.out.println(path);
+
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("path", path);
+        clipboard.setPrimaryClip(clip);
+
+        CharSequence text = "Fotoğraf linki kopyalandı!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast.makeText(getApplicationContext(), text, duration).show();
+
+
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 }
