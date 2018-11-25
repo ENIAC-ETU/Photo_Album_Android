@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "39239465141",
+    "firebase_url": "https://photoalbumandroid-master.firebaseio.com",
+    "project_id": "photoalbumandroid-master",
+    "storage_bucket": "photoalbumandroid-master.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:39239465141:android:6aee6a76c2f4227e",
+        "android_client_info": {
+          "package_name": "eniac.photo_album_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "39239465141-3fvjftvlfmeq0snbn492dq20r11rnsva.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "eniac.photo_album_android",
+            "certificate_hash": "d733b6b080ed60c9551db198c1063acf2c712329"
+          }
+        },
+        {
+          "client_id": "39239465141-ht7aqqja4d74btsjeco7ftuesr142it5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF4HvCb2ICipO4pt0mAbrLj38ueOHG9IQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "39239465141-ht7aqqja4d74btsjeco7ftuesr142it5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
