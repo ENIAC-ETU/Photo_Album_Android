@@ -1,5 +1,5 @@
 package eniac.photo_album_android;
-
+import com.pusher.pushnotifications.PushNotifications;
 import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity{
         Intent intent = getIntent();
         String action = intent.getAction();
         Uri data = intent.getData();
+        PushNotifications.start(getApplicationContext(), "534023e4-7928-4f0d-a939-125c3520dad0");
+        PushNotifications.subscribe(username);
         if (data != null) {
             setContentView(R.layout.shared_photo);
             ImageView imageView = findViewById(R.id.album_photo);
